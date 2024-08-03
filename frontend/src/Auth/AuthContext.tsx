@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async (username: string, password: string) => {
         try {
-            const response = await axios.post('http://localhost:5000/user/log-in', { username, password });
+            const response = await axios.post('https://white-board-d298.onrender.com/user/log-in', { username, password });
             setUser({ id: response.data.id, username, email: response.data.email });
             setToken(response.data.token);
             localStorage.setItem('token', response.data.token);
@@ -42,9 +42,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const register = async (username: string, email: string, password: string) => {
         try {
-            await axios.post('http://localhost:5000/user/register', { username, email, password });
+            await axios.post('https://white-board-d298.onrender.com/user/register', { username, email, password });
             navigate('/login');
-            // await login(username, password);
         } catch (error) {
             console.error('Registration failed', error);
             throw new Error('Registration failed');
@@ -61,7 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-            axios.get('http://localhost:5000/user', { headers: { Authorization: `Bearer ${storedToken}` } })
+            axios.get('https://white-board-d298.onrender.com/user', { headers: { Authorization: `Bearer ${storedToken}` } })
                 .then(response => {
                     setUser({ id: response.data.id, username: response.data.username, email: response.data.email });
                     setToken(storedToken);
